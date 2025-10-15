@@ -1,11 +1,20 @@
+#pragma once
+#include "TasNode.hpp"
 class TNode {
 public:
+    TNode();
+
     TNode(int value);
-    int getValue() const;
+
+    TasNode* getTreeNode() const;
+
     TNode *getLink() const;
+
     void setLink(TNode *link);
-    void setValue(int value);
+
+    void setTreeNode(TasNode value);
+
 private:
-    int value;
+    TasNode *treeNode;
     TNode *link;
 };

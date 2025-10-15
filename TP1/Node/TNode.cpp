@@ -1,12 +1,18 @@
 #include "TNode.hpp"
 
-TNode::TNode(int value) {
-    this->value = value;
+TNode::TNode(int value){
+    this->treeNode = new TasNode();
+    this->treeNode->setValue(value);
+    treeNode->setTNode(this);
     this->link = nullptr;
 }
 
-int TNode::getValue() const {
-    return value;
+TNode::TNode() : treeNode(), link(nullptr) {
+    treeNode->setTNode(this);
+}
+
+TasNode* TNode::getTreeNode() const {
+    return treeNode;
 }
 
 TNode *TNode::getLink() const {
@@ -17,6 +23,6 @@ void TNode::setLink(TNode *link) {
     this->link = link;
 }
 
-void TNode::setValue(int value) {
-    this->value = value;
+void TNode::setTreeNode(TasNode value) {
+    this->treeNode = &value;
 }

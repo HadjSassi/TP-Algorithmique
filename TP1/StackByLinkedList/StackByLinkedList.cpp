@@ -1,5 +1,6 @@
 #include "StackByLinkedList.hpp"
 
+//Commented lines here, are just to avoid errors of typemisatch, since we have changed the type of the value form int to TasNode.
 
 void StackByLinkedList::stackInit() {
     top = nullptr;
@@ -17,7 +18,8 @@ int StackByLinkedList::pop() {
         cout << "Stack is empty" << endl;
         return -99999;
     }
-    int value = top->getValue();
+    //int value = top->getValue();
+    int value = 0;
     TNode *temp = top;
     top = top->getLink();
     delete temp;
@@ -26,9 +28,9 @@ int StackByLinkedList::pop() {
 
 void StackByLinkedList::display() {
     TNode *current = top;
-    cout <<"----TOP : "<< top->getValue() <<"-------"<< endl;
+    // cout <<"----TOP : "<< top->getValue() <<"-------"<< endl;
     while (current != nullptr) {
-        cout << current->getValue() <<endl;
+        // cout << current->getValue() <<endl;
         current = current->getLink();
     }
     cout <<"------------------"<< endl;

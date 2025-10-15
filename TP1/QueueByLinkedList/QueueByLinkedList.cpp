@@ -16,15 +16,24 @@ void QueueByLinkedList::Push(int v) {
         rear = newNode;
     }
 }
+void QueueByLinkedList::Push(TNode* node) {
+    node->setLink(nullptr);
+    if (front == nullptr) {
+        front = node;
+        rear = node;
+    } else {
+        rear->setLink(node);
+        rear = node;
+    }
+}
 
-int QueueByLinkedList::Pop() {
+TNode* QueueByLinkedList::Pop() {
     if (front == nullptr) {
         cout << "Queue is Empty" << endl;
-        return -99999;
+        return nullptr;
     }
-    int value = front->getValue();
+    TNode* value = front;
     TNode* temp = front->getLink();
-    delete front;
     front = temp;
     return value;
 }
@@ -32,8 +41,12 @@ int QueueByLinkedList::Pop() {
 void QueueByLinkedList::display() {
     TNode* current = front;
     while (current != nullptr) {
-        cout << current->getValue() << " ";
+        cout << current->getTreeNode()->getValue() << " ";
         current = current->getLink();
     }
     cout << endl << "------------------"<< endl;
+}
+
+bool QueueByLinkedList::isEmpty() {
+    return front == nullptr;
 }
