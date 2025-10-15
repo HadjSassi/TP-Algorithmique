@@ -11,4 +11,6 @@ add_executable(TD1
         TP1/Node/TNode.hpp
         TP1/StackByLinkedList/StackByLinkedList.cpp
         TP1/StackByLinkedList/StackByLinkedList.hpp
-        TP1/main.cpp)
+        TP1/main.cpp
+        TP1/QueueByArray/QueueByArray.cpp
+        TP1/QueueByArray/QueueByArray.hpp)
