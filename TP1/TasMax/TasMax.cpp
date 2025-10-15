@@ -68,26 +68,37 @@ void TasMax::insertInGoodPlace(TNode *node) {
 void TasMax::fixUnverifiedNodes() {
     while (!unverfiedNodes.isEmpty()) {
         TNode *node = unverfiedNodes.Pop();
-        if (node->getTreeNode()->getParent() && node->getTreeNode()->getValue() > node->getTreeNode()->getParent()->getValue()) {
-            int temp = node->getTreeNode()->getValue();
-            node->getTreeNode()->setValue(node->getTreeNode()->getParent()->getValue());
-            node->getTreeNode()->getParent()->setValue(temp);
-            unverfiedNodes.Push(node->getTreeNode()->getParent()->getTNode());
+        TasNode *t = node->getTreeNode();
+
+        bool changed = false;
+
+        TasNode *parent = t->getParent();
+        if (parent && t->getValue() > parent->getValue()) {
+            int temp = t->getValue();
+            t->setValue(parent->getValue());
+            parent->setValue(temp);
+
+            unverfiedNodes.Push(parent->getTNode());
+            changed = true;
+        }
+
+        TasNode *largestChild = nullptr;
+        if (t->getLeft() && (!largestChild || t->getLeft()->getValue() > largestChild->getValue()))
+            largestChild = t->getLeft();
+        if (t->getRight() && (!largestChild || t->getRight()->getValue() > largestChild->getValue()))
+            largestChild = t->getRight();
+
+        if (largestChild && largestChild->getValue() > t->getValue()) {
+            int temp = t->getValue();
+            t->setValue(largestChild->getValue());
+            largestChild->setValue(temp);
+
+            unverfiedNodes.Push(largestChild->getTNode());
+            changed = true;
+        }
+
+        if (!changed)
             continue;
-        }
-        if (node->getTreeNode()->getLeft() && node->getTreeNode()->getValue() < node->getTreeNode()->getLeft()->getValue()) {
-            int temp = node->getTreeNode()->getValue();
-            node->getTreeNode()->setValue(node->getTreeNode()->getLeft()->getValue());
-            node->getTreeNode()->getLeft()->setValue(temp);
-            unverfiedNodes.Push(node->getTreeNode()->getLeft()->getTNode());
-            continue;
-        }
-        if (node->getTreeNode()->getRight() && node->getTreeNode()->getValue() < node->getTreeNode()->getRight()->getValue()) {
-            int temp = node->getTreeNode()->getValue();
-            node->getTreeNode()->setValue(node->getTreeNode()->getRight()->getValue());
-            node->getTreeNode()->getRight()->setValue(temp);
-            unverfiedNodes.Push(node->getTreeNode()->getRight()->getTNode());
-        }
     }
 }
 
@@ -100,6 +111,47 @@ bool TasMax::isEmpty() {
 }
 
 int TasMax::extractMax() {
+    if (isEmpty()) {
+        std::cout << "Heap is empty." << std::endl;
+        return -1;
+    }
+
+    int maxValue = sommet->getTreeNode()->getValue();
+
+    if (!sommet->getTreeNode()->getLeft() && !sommet->getTreeNode()->getRight()) {
+        delete sommet;
+        sommet = nullptr;
+        return maxValue;
+    }
+
+    QueueByLinkedList queue;
+    queue.QueueInit();
+    queue.Push(sommet);
+    TNode *lastNode = nullptr;
+    while (!queue.isEmpty()) {
+        lastNode = queue.Pop();
+        if (lastNode->getTreeNode()->getLeft())
+            queue.Push(lastNode->getTreeNode()->getLeft()->getTNode());
+        if (lastNode->getTreeNode()->getRight())
+            queue.Push(lastNode->getTreeNode()->getRight()->getTNode());
+    }
+
+    sommet->getTreeNode()->setValue(lastNode->getTreeNode()->getValue());
+
+    TasNode *parent = lastNode->getTreeNode()->getParent();
+    if (parent) {
+        if (parent->getLeft() == lastNode->getTreeNode())
+            parent->setLeft(nullptr);
+        else if (parent->getRight() == lastNode->getTreeNode())
+            parent->setRight(nullptr);
+    }
+    delete lastNode;
+
+    unverfiedNodes.QueueInit();
+    unverfiedNodes.Push(sommet);
+    fixUnverifiedNodes();
+
+    return maxValue;
 }
 
 void TasMax::displayTreeAscii(TNode *node, const std::string &prefix, bool isLeft) {

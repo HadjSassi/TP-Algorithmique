@@ -17,5 +17,8 @@ int main() {
     tas.insert(188);
     tas.insert(95);
     tas.display();
+    tas.extractMax();
+    tas.extractMax();
+    tas.display();
     return 0;
 }
