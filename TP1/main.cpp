@@ -1,7 +1,7 @@
-#include "StackByArray/StackByArray.hpp"
+#include "StackByLinkedList/StackByLinkedList.hpp"
 
 int main() {
-    StackByArray stack;
+    StackByLinkedList stack;
     stack.stackInit();
     stack.push(1);
     stack.push(2);
