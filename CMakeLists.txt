@@ -15,4 +15,6 @@ add_executable(TD1
         TP1/QueueByArray/QueueByArray.cpp
         TP1/QueueByArray/QueueByArray.hpp
         TP1/QueueByCList/QueueByCList.cpp
-        TP1/QueueByCList/QueueByCList.hpp)
+        TP1/QueueByCList/QueueByCList.hpp
+        TP1/QueueByLinkedList/QueueByLinkedList.cpp
+        TP1/QueueByLinkedList/QueueByLinkedList.hpp)

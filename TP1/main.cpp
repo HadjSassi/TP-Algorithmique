@@ -1,7 +1,7 @@
-#include "QueueByCList/QueueByCList.hpp"
+#include "QueueByLinkedList/QueueByLinkedList.hpp"
 
 int main() {
-    QueueByCList queue;
+    QueueByLinkedList queue;
     queue.QueueInit();
     queue.display();
     queue.Push(1);
