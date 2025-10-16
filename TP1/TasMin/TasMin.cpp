@@ -1,73 +1,12 @@
 #include "TasMin.hpp"
+
 #include "../QueueByLinkedList/QueueByLinkedList.hpp"
-#include <iostream>
-
-TasMin::TasMin() {
-    this->sommet = nullptr;
-    unverfiedNodes.QueueInit();
-}
-
-TasMin::~TasMin() {
-    while (!isEmpty()) {
-        extractMin();
-    }
-}
-
-void TasMin::insert(int value) {
-    TNode *newNode = new TNode(value);
-    if (sommet == nullptr) {
-        sommet = newNode;
-        return;
-    }
-
-    unverfiedNodes.Push(newNode);
-    insertInGoodPlace(newNode);
-    fixUnverifiedNodes();
-}
-
-int TasMin::lengthTas() {
-    int length = 0;
-    QueueByLinkedList queue;
-    queue.QueueInit();
-    queue.Push(sommet);
-
-    while (!queue.isEmpty()) {
-        TNode *current = queue.Pop();
-        length++;
-        if (current->getTreeNode()->getLeft())
-            queue.Push(current->getTreeNode()->getLeft()->getTNode());
-        if (current->getTreeNode()->getRight())
-            queue.Push(current->getTreeNode()->getRight()->getTNode());
-    }
-
-    return length;
-}
-
-void TasMin::insertInGoodPlace(TNode *node) {
-    QueueByLinkedList queue;
-    queue.QueueInit();
-    queue.Push(sommet);
-
-    while (!queue.isEmpty()) {
-        TNode *current = queue.Pop();
-        if (!current->getTreeNode()->getLeft()) {
-            current->getTreeNode()->setLeft(node->getTreeNode());
-            node->getTreeNode()->setParent(current->getTreeNode());
-            return;
-        } else queue.Push(current->getTreeNode()->getLeft()->getTNode());
-
-        if (!current->getTreeNode()->getRight()) {
-            current->getTreeNode()->setRight(node->getTreeNode());
-            node->getTreeNode()->setParent(current->getTreeNode());
-            return;
-        } else queue.Push(current->getTreeNode()->getRight()->getTNode());
-    }
-}
 
 void TasMin::fixUnverifiedNodes() {
     while (!unverfiedNodes.isEmpty()) {
         TNode *node = unverfiedNodes.Pop();
         TasNode *t = node->getTreeNode();
+
         bool changed = false;
 
         TasNode *parent = t->getParent();
@@ -81,10 +20,8 @@ void TasMin::fixUnverifiedNodes() {
         }
 
         TasNode *smallestChild = nullptr;
-
         if (t->getLeft() && (!smallestChild ))
             smallestChild = t->getLeft();
-
         if (t->getRight() && (!smallestChild || t->getRight()->getValue() < smallestChild->getValue()))
             smallestChild = t->getRight();
 
@@ -97,24 +34,16 @@ void TasMin::fixUnverifiedNodes() {
             changed = true;
         }
 
-
         if (!changed)
             continue;
     }
 }
 
-TNode TasMin::getMin() {
-    return *sommet;
-}
-
-bool TasMin::isEmpty() {
-    return sommet == nullptr;
-}
 
 int TasMin::extractMin() {
-    if (isEmpty()) {
-        std::cout << "Heap is empty." << std::endl;
-        return -1;
+    if (!sommet) {
+        cout << "Heap is empty." << endl;
+        return -1; // or throw an exception
     }
 
     int minValue = sommet->getTreeNode()->getValue();
@@ -153,28 +82,4 @@ int TasMin::extractMin() {
     fixUnverifiedNodes();
 
     return minValue;
-}
-
-void TasMin::displayTreeAscii(TNode *node, const std::string &prefix, bool isLeft) {
-    if (!node) return;
-
-    std::cout << prefix;
-    std::cout << (isLeft ? "├── " : "└── ");
-    std::cout << node->getTreeNode()->getValue() << std::endl;
-
-    std::string childPrefix = prefix + (isLeft ? "│   " : "    ");
-    if (node->getTreeNode()->getLeft() || node->getTreeNode()->getRight()) {
-        if (node->getTreeNode()->getLeft())
-            displayTreeAscii(node->getTreeNode()->getLeft()->getTNode(), childPrefix, true);
-        if (node->getTreeNode()->getRight())
-            displayTreeAscii(node->getTreeNode()->getRight()->getTNode(), childPrefix, false);
-    }
-}
-
-void TasMin::display() {
-    if (!sommet) {
-        std::cout << "Heap is empty." << std::endl;
-        return;
-    }
-    displayTreeAscii(sommet, "", false);
 }

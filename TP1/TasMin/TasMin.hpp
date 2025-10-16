@@ -1,22 +1,11 @@
-#include <string>
-#include "../Node/TNode.hpp"
-#include "../QueueByLinkedList/QueueByLinkedList.hpp"
+#include <vector>
 
-class TasMin {
-    TNode *sommet;
-    QueueByLinkedList unverfiedNodes;
+#include "../TasMax/TasMax.hpp"
+using namespace std;
 
-
+class TasMin : public TasMax {
 public:
-    TasMin();
-    ~TasMin();
-    void insertInGoodPlace(TNode *node);
     void fixUnverifiedNodes();
-    void displayTreeAscii(TNode *node, const std::string &prefix, bool isLeft);
-    void insert(int value);
+
     int extractMin();
-    int lengthTas();
-    TNode getMin();
-    bool isEmpty();
-    void display();
 };

@@ -5,10 +5,14 @@
 using namespace std;
 
 class TasMax {
+protected:
+    TNode *sommet;
+    QueueByLinkedList unverfiedNodes;
+
 public:
     TasMax();
 
-    ~TasMax();
+    virtual ~TasMax();
 
     void insert(int value);
 
@@ -16,7 +20,7 @@ public:
 
     void insertInGoodPlace(TNode *node);
 
-    void fixUnverifiedNodes();
+    virtual void fixUnverifiedNodes();
 
     TNode getMax();
 
@@ -28,7 +32,5 @@ public:
 
     bool isEmpty();
 
-private:
-    TNode *sommet;
-    QueueByLinkedList unverfiedNodes;
+
 };
