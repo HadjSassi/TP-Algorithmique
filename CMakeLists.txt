@@ -24,3 +24,5 @@ add_executable(TD1
         TP1/Node/TasNode.hpp)
 add_executable(TD2
         TP2/Ex4/main.cpp)
+add_executable(TD2_ex6
+        TP2/Ex6/Sous-séquences.cpp)
