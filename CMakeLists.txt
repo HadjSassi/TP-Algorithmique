@@ -22,3 +22,5 @@ add_executable(TD1
         TP1/TasMax/TasMax.hpp
         TP1/Node/TasNode.cpp
         TP1/Node/TasNode.hpp)
+add_executable(TD2
+        TP2/Ex4/main.cpp)
