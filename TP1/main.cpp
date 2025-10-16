@@ -1,7 +1,11 @@
 #include "TasMax/TasMax.hpp"
+#include "TasMin/TasMin.hpp"
+#include <iostream>
 
 int main() {
-    TasMax tas;
+    TasMin tas;
+
+    std::cout << "=== Insertion des elements dans le Tas Min ===" << std::endl;
     tas.insert(27);
     tas.insert(12);
     tas.insert(8);
@@ -16,9 +20,24 @@ int main() {
     tas.insert(32);
     tas.insert(188);
     tas.insert(95);
+
+    std::cout << "\n--- Tas Min initial ---" << std::endl;
     tas.display();
-    tas.extractMax();
-    tas.extractMax();
+
+    std::cout << "\n--- Extraction du plus petit element ---" << std::endl;
+    int min1 = tas.extractMin();
+    std::cout << "Valeur minimale extraite : " << min1 << std::endl;
+
+    std::cout << "\n--- Tas apres la premiere extraction ---" << std::endl;
     tas.display();
+
+    std::cout << "\n--- Deuxieme extraction du plus petit element ---" << std::endl;
+    int min2 = tas.extractMin();
+    std::cout << "Valeur minimale extraite : " << min2 << std::endl;
+
+    std::cout << "\n--- Tas apres la deuxieme extraction ---" << std::endl;
+    tas.display();
+
+    std::cout << "\n=== Fin du test Tas Min ===" << std::endl;
     return 0;
 }

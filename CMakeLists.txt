@@ -3,7 +3,9 @@ project(Algorithmique)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Algorithmique main.cpp)
+add_executable(Algorithmique main.cpp
+        TP1/TasMin/TasMin.cpp
+        TP1/TasMin/TasMin.hpp)
 add_executable(TD1
         TP1/StackByArray/StackByArray.cpp
         TP1/StackByArray/StackByArray.hpp
@@ -20,6 +22,8 @@ add_executable(TD1
         TP1/QueueByLinkedList/QueueByLinkedList.hpp
         TP1/TasMax/TasMax.cpp
         TP1/TasMax/TasMax.hpp
+        TP1/TasMin/TasMin.hpp
+        TP1/TasMin/TasMin.cpp
         TP1/Node/TasNode.cpp
         TP1/Node/TasNode.hpp)
 add_executable(TD2
