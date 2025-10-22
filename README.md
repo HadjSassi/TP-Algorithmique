@@ -1,5 +1,8 @@
 # Compte rendu — TP Algorithmique
 
+## par : BAATOUT CHAHRAZED  et  HADJ SASSI Mahdi
+# lien github : https://github.com/HadjSassi/TP-Algorithmique
+
 Ce dépôt contient le premier compte rendu de nos travaux pratiques d'algorithmique, organisé en deux parties :
 
 1. TP1 : tous les exercices.
